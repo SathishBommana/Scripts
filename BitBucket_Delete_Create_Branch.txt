@@ -1,4 +1,4 @@
-﻿### this function will invoke git.exe
+### this function will invoke git.exe
 Function RunProcess(
     [string]$procPath,
     [string]$procArgs,
@@ -85,7 +85,11 @@ Function DeleteBranch(
 	Write-Host "Deleted $BranchToDelete from $Reponame Repository:Completed"
 }
 
-DeleteBranch -RepoFolderPath "C:\Apps\Code\Test" -Reponame "testproject" -BranchToDelete "Test1"
+$DeleteBranches = @("Develop-01-01-2021","Sit-01-01-2021","Release-01-01-2021")
+$DeleteBranches.Length
+ForEach($Branch in $DeleteBranches) {
+  DeleteBranch -RepoFolderPath "C:\Apps\Code\Test" -Reponame "testproject" -BranchToDelete $Branch
+}
 
 ### this script will create branch
 Function CreateNewBranch(
@@ -147,8 +151,12 @@ Function PushBranch(
     Write-Host "Remote branch $NewBranch pushed into $Reponame Repository with the changes" 
 }
 
-CreateNewBranch -newbranch "Test3" -RepoFolderpath "C:\Apps\Code\Test" -Reponame "testproject" -DefaultBranch "main"
-PushBranch -newbranch "Test3" -RepoFolderpath "C:\Apps\Code\Test" -Reponame "testproject"
+$CreateBranches = @("Develop-01-01-2021","Sit-01-01-2021","Release-01-01-2021")
+$CreateBranches.Length
+ForEach($Branch in $CreateBranches) {
+  CreateNewBranch -newbranch $Branch -RepoFolderpath "C:\Apps\Code\Test" -Reponame "testproject" -DefaultBranch "main"
+  PushBranch -newbranch $Branch -RepoFolderpath "C:\Apps\Code\Test" -Reponame "testproject"
+}
 
 
 
